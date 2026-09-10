@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foyer — Riverside Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Karla:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="chat-page">
+
+<nav class="topbar">
+  <a class="wordmark" href="/">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    Foyer
+  </a>
+  <a class="topbar-link" href="/admin.html">Admin view &rarr;</a>
+</nav>
+
+<main class="chat-shell">
+  <div class="chat-intro">
+    <p class="mono-label">Riverside Community Trust</p>
+    <h1>Ask us anything.<span class="muted"> We answer right away.</span></h1>
+    <p class="lead">Event times, parking, sign-ups, donation questions — Foyer handles
+      the front desk so a volunteer doesn't have to.</p>
+  </div>
+
+  <section class="phone" aria-label="Message thread with Foyer">
+    <header class="phone-head">
+      <span class="avatar">RCT</span>
+      <div>
+        <strong>Riverside Community Trust</strong>
+        <span class="status"><i class="dot"></i>Usually replies instantly</span>
+      </div>
+    </header>
+
+    <div class="thread" id="thread">
+      <div class="msg them">
+        <p>Hi! I'm the front desk for Riverside Community Trust. Ask me about
+        events, parking, sign-ups, or your donations.</p>
+      </div>
+    </div>
+
+    <div class="composer">
+      <input id="input" type="text" autocomplete="off"
+             placeholder="When is the food drive?" aria-label="Your message">
+      <button id="send" aria-label="Send message">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <div class="suggestions" id="suggestions">
+    <button>When is the food drive and where do I park?</button>
+    <button>Can I still sign up for the volunteer orientation?</button>
+    <button>Which donors are lapsing?</button>
+  </div>
+</main>
+
+<script src="/chat.js"></script>
+</body>
+</html>

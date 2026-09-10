@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640" font-family="Karla, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#99918A"/>
+    </marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#B0692B"/>
+    </marker>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B0692B"/><stop offset="100%" stop-color="#D3924E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="640" fill="#FAF7F3"/>
+
+  <text x="40" y="46" font-size="19" font-weight="600" fill="#14110E" letter-spacing="-0.4">Foyer — architecture</text>
+  <text x="40" y="68" font-size="12.5" fill="#99918A">Multi-agent front desk for small nonprofits · Strands Agents SDK</text>
+
+  <!-- inbound -->
+  <rect x="40" y="110" width="150" height="46" rx="12" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="115" y="132" font-size="12.5" fill="#14110E" text-anchor="middle" font-weight="500">Community member</text>
+  <text x="115" y="147" font-size="10.5" fill="#99918A" text-anchor="middle">events · RSVPs</text>
+
+  <rect x="40" y="176" width="150" height="46" rx="12" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="115" y="198" font-size="12.5" fill="#14110E" text-anchor="middle" font-weight="500">Donor</text>
+  <text x="115" y="213" font-size="10.5" fill="#99918A" text-anchor="middle">gifts · questions</text>
+
+  <path d="M190 133 H240 V158" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <path d="M190 199 H240 V176" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <text x="215" y="126" font-size="10" fill="#99918A" text-anchor="middle">chat / SMS</text>
+
+  <!-- orchestrator -->
+  <rect x="248" y="145" width="160" height="52" rx="13" fill="#14110E"/>
+  <text x="328" y="167" font-size="13" fill="#FBF8F4" text-anchor="middle" font-weight="500">Orchestrator</text>
+  <text x="328" y="183" font-size="10.5" fill="#99918A" text-anchor="middle">routes by intent</text>
+
+  <!-- sub-agents -->
+  <path d="M408 160 H455" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <path d="M408 182 H455" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+
+  <rect x="462" y="96" width="196" height="112" rx="14" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="478" y="120" font-size="12.5" fill="#14110E" font-weight="500">Front Desk agent</text>
+  <text x="478" y="137" font-size="10.5" fill="#3F7D57">acts autonomously — low risk</text>
+  <text x="478" y="160" font-size="10.5" fill="#5C554D" font-family="JetBrains Mono, monospace">get_event_info</text>
+  <text x="478" y="177" font-size="10.5" fill="#5C554D" font-family="JetBrains Mono, monospace">make_rsvp</text>
+  <text x="478" y="196" font-size="10" fill="#99918A">no send-restricted tools needed</text>
+
+  <rect x="462" y="228" width="196" height="130" rx="14" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="478" y="252" font-size="12.5" fill="#14110E" font-weight="500">Donor Steward agent</text>
+  <text x="478" y="269" font-size="10.5" fill="#B0692B">cannot send — only draft</text>
+  <text x="478" y="292" font-size="10.5" fill="#5C554D" font-family="JetBrains Mono, monospace">get_donor_profile</text>
+  <text x="478" y="309" font-size="10.5" fill="#5C554D" font-family="JetBrains Mono, monospace">check_lapsing_donors</text>
+  <text x="478" y="326" font-size="10.5" fill="#5C554D" font-family="JetBrains Mono, monospace">draft_followup_message</text>
+  <text x="478" y="346" font-size="10" fill="#99918A">no “send” tool exists in its registry</text>
+
+  <!-- outcomes -->
+  <path d="M658 152 H716" stroke="#3F7D57" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <rect x="722" y="130" width="182" height="46" rx="12" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="813" y="152" font-size="12" fill="#14110E" text-anchor="middle" font-weight="500">Replies immediately</text>
+  <text x="813" y="167" font-size="10.5" fill="#99918A" text-anchor="middle">no human needed</text>
+
+  <path d="M658 290 H716" stroke="#B0692B" stroke-width="1.6" fill="none" marker-end="url(#aA)"/>
+  <rect x="722" y="252" width="182" height="76" rx="14" fill="url(#g)"/>
+  <text x="813" y="280" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="600">Approval gate</text>
+  <text x="813" y="298" font-size="10.5" fill="#FBEEE0" text-anchor="middle">a human decides before</text>
+  <text x="813" y="312" font-size="10.5" fill="#FBEEE0" text-anchor="middle">anything reaches a donor</text>
+
+  <path d="M770 328 V372" stroke="#3F7D57" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <path d="M856 328 V372" stroke="#A6483C" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+  <rect x="716" y="378" width="108" height="38" rx="11" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="770" y="402" font-size="11.5" fill="#3F7D57" text-anchor="middle">Approved → sent</text>
+  <rect x="832" y="378" width="80" height="38" rx="11" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="872" y="402" font-size="11.5" fill="#A6483C" text-anchor="middle">Rejected</text>
+
+  <!-- decision log -->
+  <rect x="248" y="452" width="656" height="76" rx="15" fill="#FFFFFF" stroke="#EAE5DF"/>
+  <text x="272" y="480" font-size="12.5" fill="#14110E" font-weight="500">Decision log</text>
+  <text x="272" y="499" font-size="10.5" fill="#5C554D">Every action by every agent, plus every human decision — written in plain language,</text>
+  <text x="272" y="514" font-size="10.5" fill="#5C554D">so a board member with no technical background can audit it.</text>
+
+  <path d="M560 208 V452" stroke="#EAE5DF" stroke-width="1.2" stroke-dasharray="3 4" fill="none" marker-end="url(#a)"/>
+  <path d="M560 358 V452" stroke="#EAE5DF" stroke-width="1.2" stroke-dasharray="3 4" fill="none"/>
+  <path d="M813 416 V452" stroke="#EAE5DF" stroke-width="1.2" stroke-dasharray="3 4" fill="none" marker-end="url(#a)"/>
+
+  <!-- data -->
+  <rect x="40" y="452" width="180" height="76" rx="15" fill="#F4F0EA" stroke="#EAE5DF"/>
+  <text x="130" y="480" font-size="12" fill="#14110E" text-anchor="middle" font-weight="500">Nonprofit records</text>
+  <text x="130" y="498" font-size="10.5" fill="#99918A" text-anchor="middle" font-family="JetBrains Mono, monospace">events · rsvps</text>
+  <text x="130" y="513" font-size="10.5" fill="#99918A" text-anchor="middle" font-family="JetBrains Mono, monospace">donors</text>
+  <path d="M220 490 H248" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+
+  <!-- admin -->
+  <rect x="248" y="556" width="656" height="46" rx="12" fill="#14110E"/>
+  <text x="576" y="578" font-size="12.5" fill="#FBF8F4" text-anchor="middle" font-weight="500">Admin dashboard — approval queue + readable audit trail</text>
+  <text x="576" y="593" font-size="10.5" fill="#99918A" text-anchor="middle">the only surface the nonprofit staffer actually has to open</text>
+  <path d="M576 528 V550" stroke="#99918A" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+</svg>

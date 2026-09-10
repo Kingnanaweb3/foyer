@@ -1,0 +1,315 @@
+/* ============================================================
+   Foyer design tokens
+   Light mode: the content (a donor's name, a drafted message) is the
+   product, so it gets the brighter surface.
+   The accent has exactly one meaning throughout: a human decision point.
+   It appears on the logo mark, the approve action, and the pending badge.
+   Nowhere else.
+   ============================================================ */
+:root {
+  --ink:    #14110E;
+  --ink-2:  #5C554D;
+  --ink-3:  #99918A;
+  --border: #EAE5DF;
+
+  --accent:   #B0692B;
+  --accent-2: #D3924E;
+  --gradient: linear-gradient(140deg, var(--accent), var(--accent-2));
+
+  --surface: #FFFFFF;
+  --wash:    linear-gradient(155deg, #FAF7F3 0%, #F4F0EA 55%, #FBF8F4 100%);
+
+  --ok:   #3F7D57;
+  --warn: #B0692B;
+  --bad:  #A6483C;
+
+  --shadow-rest:   0 10px 26px -20px rgba(20,17,14,0.32);
+  --shadow-accent: 0 18px 44px -18px rgba(176,105,43,0.55);
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+
+body {
+  margin: 0;
+  font-family: "Karla", ui-sans-serif, sans-serif;
+  font-weight: 300;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  background: var(--wash);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: "Familjen Grotesk", ui-sans-serif, sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.032em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(28px, 4.2vw, 44px); line-height: 1.08; }
+h2 { font-size: 21px; line-height: 1.18; letter-spacing: -0.024em; }
+
+.muted { color: var(--ink-3); }
+
+.lead {
+  font-size: clamp(15px, 1.35vw, 16.5px);
+  line-height: 1.70;
+  max-width: min(100%, 52ch);
+  margin: 16px 0 0;
+}
+
+.mono-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 12px;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px clamp(24px, 6vw, 64px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(14px) saturate(140%);
+  position: sticky; top: 0; z-index: 10;
+}
+.wordmark {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "Familjen Grotesk", sans-serif;
+  font-weight: 600; font-size: 15.5px; letter-spacing: -0.02em;
+  color: var(--ink); text-decoration: none;
+}
+/* the mark is one of the accent's three sanctioned roles */
+.wordmark svg { color: var(--accent); }
+.topbar-link {
+  font-size: 13px; color: var(--ink-3); text-decoration: none;
+  transition: color .18s ease;
+}
+.topbar-link:hover { color: var(--ink); }
+
+/* ============================================================
+   COMMUNITY CHAT
+   ============================================================ */
+.chat-shell {
+  max-width: 1160px; margin: 0 auto;
+  padding: clamp(48px, 7vw, 88px) clamp(24px, 6vw, 64px) 96px;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: clamp(32px, 5vw, 72px); align-items: start;
+}
+.chat-intro { min-width: 0; padding-top: 12px; }
+.suggestions { grid-column: 1; display: flex; flex-direction: column;
+  gap: 10px; align-items: flex-start; margin-top: 32px; }
+.suggestions button {
+  font-family: inherit; font-size: 13px; font-weight: 400;
+  color: var(--ink-2); text-align: left;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 10px 18px; cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease;
+}
+.suggestions button:hover { transform: translateY(-1px); border-color: var(--ink-3); }
+
+/* phone frame */
+.phone {
+  grid-row: 1 / span 2;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  box-shadow: var(--shadow-rest);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  height: 560px;
+}
+.phone-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+}
+.phone-head strong {
+  display: block; font-family: "Familjen Grotesk", sans-serif;
+  font-weight: 500; font-size: 14px; color: var(--ink); letter-spacing: -0.01em;
+}
+.avatar {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: #F2EDE6; color: var(--ink-2);
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.04em;
+}
+.status { font-size: 11.5px; color: var(--ink-3); display: inline-flex;
+  align-items: center; gap: 6px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ok);
+  display: inline-block; }
+
+.thread {
+  flex: 1; overflow-y: auto;
+  padding: 22px 20px; display: flex; flex-direction: column; gap: 12px;
+  background: #FDFCFA;
+}
+.msg { max-width: 82%; }
+.msg p {
+  margin: 0; padding: 11px 15px; border-radius: 16px;
+  font-size: 14px; line-height: 1.55;
+}
+.msg.them p { background: #F2EDE6; color: var(--ink-2); border-bottom-left-radius: 5px; }
+.msg.me { align-self: flex-end; }
+.msg.me p { background: var(--ink); color: #FBF8F4; border-bottom-right-radius: 5px; }
+
+.typing p { display: inline-flex; gap: 4px; align-items: center; }
+.typing span {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3);
+  animation: blink 1.3s infinite;
+}
+.typing span:nth-child(2) { animation-delay: .18s; }
+.typing span:nth-child(3) { animation-delay: .36s; }
+@keyframes blink { 0%,60%,100% { opacity:.25 } 30% { opacity:1 } }
+
+.composer {
+  display: flex; gap: 10px; padding: 14px 16px;
+  border-top: 1px solid var(--border); background: var(--surface);
+}
+.composer input {
+  flex: 1; min-width: 0; font-family: inherit; font-size: 14px; font-weight: 300;
+  color: var(--ink); background: #F7F4EF;
+  border: 1px solid transparent; border-radius: 999px; padding: 11px 18px;
+  outline: none; transition: border-color .18s ease;
+}
+.composer input:focus { border-color: var(--border); background: #FDFCFA; }
+.composer button {
+  width: 42px; height: 42px; flex: 0 0 42px; border: none; border-radius: 50%;
+  background: var(--ink); color: #FBF8F4; cursor: pointer;
+  display: grid; place-items: center;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.composer button:hover { transform: translateY(-1px); }
+.composer button:disabled { opacity: .35; cursor: default; transform: none; }
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+.admin-shell {
+  max-width: 860px; margin: 0 auto;
+  padding: clamp(48px, 7vw, 88px) clamp(24px, 6vw, 64px) 96px;
+}
+.admin-head { margin-bottom: 44px; }
+
+.block-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin-bottom: 18px;
+}
+.hint { font-size: 12.5px; color: var(--ink-3); }
+.count {
+  font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+  letter-spacing: 0.06em;
+  padding: 4px 11px; border-radius: 999px;
+  background: rgba(176,105,43,0.10); color: var(--accent);
+  border: 1px solid rgba(176,105,43,0.22);
+}
+.queue-block { margin-bottom: 64px; }
+
+/* pending card: the accent's second sanctioned role */
+.card {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid var(--border);
+  border-radius: 17px; padding: 24px;
+  box-shadow: var(--shadow-rest);
+  margin-bottom: 18px;
+}
+.card.pending {
+  background: linear-gradient(150deg, rgba(255,252,247,0.96), rgba(250,244,235,0.92));
+  border: 1px solid rgba(176,105,43,0.26);
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.55);
+}
+.card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; margin-bottom: 14px;
+}
+.tag {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3);
+}
+.badge {
+  font-size: 11.5px; font-weight: 500; padding: 3px 10px; border-radius: 999px;
+}
+.badge.pending  { background: rgba(176,105,43,0.12); color: var(--accent); }
+.badge.approved { background: rgba(63,125,87,0.12);  color: var(--ok); }
+.badge.rejected { background: rgba(166,72,60,0.12);  color: var(--bad); }
+
+/* the reasoning is the whole point of the product -- give it real presence */
+.why {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 13px 15px; margin-bottom: 16px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border); border-radius: 11px;
+  font-size: 13.5px; line-height: 1.6;
+}
+.why svg { flex: 0 0 15px; margin-top: 3px; color: var(--ink-3); }
+
+.draft {
+  padding: 16px 18px; border-radius: 12px;
+  background: #FDFCFA; border: 1px solid var(--border);
+  font-size: 14px; line-height: 1.62; color: var(--ink-2);
+  margin-bottom: 18px;
+}
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: inherit; font-weight: 500; font-size: 13.5px;
+  padding: 11px 22px; border-radius: 999px; cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.pill:hover { transform: translateY(-1px); }
+/* primary stays neutral -- a near-black CTA on an accent-flecked page
+   reads more confident than accent-on-accent */
+.pill.primary { background: var(--ink); color: #FBF8F4; }
+.pill.ghost   { background: transparent; color: var(--ink-2); border-color: var(--border); }
+.pill.ghost:hover { border-color: var(--ink-3); }
+
+.empty {
+  padding: 26px; text-align: center; font-size: 13.5px; color: var(--ink-3);
+  border: 1px dashed var(--border); border-radius: 14px; margin: 0;
+}
+
+/* decision log: bordered key rows, hairline dividers, no zebra striping */
+.log-list {
+  border: 1px solid var(--border); border-radius: 15px;
+  background: rgba(255,255,255,0.7); overflow: hidden;
+}
+.log-row {
+  display: grid; grid-template-columns: minmax(0, 132px) minmax(0, 1fr);
+  gap: 18px; padding: 15px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.log-row:last-child { border-bottom: none; }
+.log-time {
+  font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+  color: var(--ink-3); min-width: 0;
+}
+.log-body { min-width: 0; font-size: 13.5px; }
+.log-body strong {
+  display: block; font-weight: 500; color: var(--ink); font-size: 13.5px;
+}
+.log-actor {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px;
+  letter-spacing: 0.06em; color: var(--ink-3);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .chat-shell { grid-template-columns: minmax(0, 1fr); }
+  .phone { grid-row: auto; order: -1; height: 500px; }
+  .suggestions { grid-column: auto; }
+}
+@media (max-width: 520px) {
+  .log-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "evt1",
+    "name": "Fall Food Drive",
+    "date": "2026-09-20",
+    "location": "Community Center, 123 Main St",
+    "parking": "Free lot behind the building",
+    "capacity": 50,
+    "spots_taken": 32
+  },
+  {
+    "id": "evt2",
+    "name": "Volunteer Orientation",
+    "date": "2026-09-12",
+    "location": "Library Annex, Room 2",
+    "parking": "Street parking only",
+    "capacity": 20,
+    "spots_taken": 20
+  }
+]

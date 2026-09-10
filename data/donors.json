@@ -1,0 +1,29 @@
+[
+  {
+    "id": "d1",
+    "name": "Maria Chen",
+    "email": "maria@example.com",
+    "total_given": 450,
+    "last_gift_date": "2026-07-15",
+    "gift_count": 6,
+    "avg_days_between_gifts": 30
+  },
+  {
+    "id": "d2",
+    "name": "James Okafor",
+    "email": "james@example.com",
+    "total_given": 1200,
+    "last_gift_date": "2026-03-02",
+    "gift_count": 4,
+    "avg_days_between_gifts": 45
+  },
+  {
+    "id": "d3",
+    "name": "Priya Nair",
+    "email": "priya@example.com",
+    "total_given": 80,
+    "last_gift_date": "2026-08-28",
+    "gift_count": 1,
+    "avg_days_between_gifts": null
+  }
+]

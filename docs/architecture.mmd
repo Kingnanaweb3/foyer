@@ -1,0 +1,29 @@
+flowchart TD
+    A[Community Member] -->|Web chat / SMS| B[Foyer Orchestrator]
+    A2[Donor] -->|Web chat / SMS| B
+
+    B -->|routes| C[Front Desk Sub-Agent]
+    B -->|routes| D[Donor Steward Sub-Agent]
+
+    C --> C1[get_event_info]
+    C --> C2[make_rsvp]
+    D --> D1[get_donor_profile]
+    D --> D2[check_lapsing_donors]
+    D --> D3[draft_followup_message]
+
+    C -->|low risk| E[Replies immediately]
+    D -->|donor-facing| F{Approval Gate}
+
+    F -->|human approves| G[Message sent]
+    F -->|human rejects| H[Discarded]
+
+    C --> I[(Decision Log)]
+    D --> I
+    F --> I
+    I --> J[Admin Dashboard]
+
+    K[(events / donors / rsvps)] --> C1
+    K --> C2
+    K --> D1
+    K --> D2
+    K --> D3
