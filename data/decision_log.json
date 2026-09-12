@@ -46,5 +46,17 @@
     "agent": "human_admin",
     "action": "approved donor_message (appr_2)",
     "reason": "Reviewed by a human and approved."
+  },
+  {
+    "timestamp": "2026-09-12T15:18:27.163023+00:00",
+    "agent": "donor_steward",
+    "action": "queued re-engagement message draft for James Okafor",
+    "reason": "Prepared a personalized re-engagement draft and placed it in the approval queue per policy."
+  },
+  {
+    "timestamp": "2026-09-12T15:22:56.958012+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_4)",
+    "reason": "Reviewed by a human and approved."
   }
 ]

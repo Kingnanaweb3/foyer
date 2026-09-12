@@ -31,5 +31,16 @@
     "status": "approved",
     "decided_at": "2026-09-12T14:34:21.621433+00:00",
     "note": ""
+  },
+  {
+    "id": "appr_4",
+    "timestamp": "2026-09-12T15:18:26.298403+00:00",
+    "agent": "donor_steward",
+    "action_type": "donor_message",
+    "content": "Hi James, it's been a little while since we last heard from you. Your past support ($1200 over 4 gifts) has made a real difference \u2014 we'd love to share a quick update on what that's helped us do.",
+    "reason": "Re-engagement draft for a donor who hasn't given since March 2026; aims to thank past support and invite renewed involvement.",
+    "status": "approved",
+    "decided_at": "2026-09-12T15:22:56.958012+00:00",
+    "note": ""
   }
 ]

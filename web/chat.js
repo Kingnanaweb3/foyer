@@ -2,14 +2,13 @@ const thread = document.getElementById("thread");
 const input  = document.getElementById("input");
 const send   = document.getElementById("send");
 
-/* The model replies in light markdown -- **bold** and "- " bullets. Rendering
-   it as raw text shows literal asterisks; rendering it via innerHTML would
-   execute model output as markup. So we parse it into real DOM nodes and set
-   text with textContent only. Safe by construction, still looks right. */
-function renderInline(text, parent) {
-  // split on **bold** runs, keeping the captured group
+/* The agent replies in light markdown: **bold** names and "- " bullets.
+   Plain text would show literal asterisks; innerHTML would execute model
+   output as markup. So we parse into real DOM nodes and only ever set text
+   via textContent — safe by construction, and the formatting still renders. */
+function inline(text, parent) {
   text.split(/\*\*(.+?)\*\*/g).forEach((part, i) => {
-    if (!part) return;
+    if (!part) return;                 // skip empties but keep index parity
     if (i % 2 === 1) {
       const b = document.createElement("strong");
       b.textContent = part;
@@ -20,26 +19,26 @@ function renderInline(text, parent) {
   });
 }
 
-/* Append one bubble. `who` is "me" or "them". */
 function bubble(who, text) {
   const el = document.createElement("div");
   el.className = `msg ${who}`;
 
-  // Normalise: the model sometimes runs bullets inline instead of on new lines.
-  const normalised = text.replace(/\s+-\s+\*\*/g, "\n- **");
-  const lines = normalised.split("\n").map((l) => l.trim()).filter(Boolean);
+  // The model often runs bullets inline rather than on their own lines.
+  const lines = text
+    .replace(/\s+[-•*]\s+(?=\*\*)/g, "\n- ")
+    .split("\n").map((l) => l.trim()).filter(Boolean);
 
   let list = null;
   lines.forEach((line) => {
-    if (line.startsWith("- ")) {
+    if (/^[-•]\s/.test(line) || /^\*\s/.test(line)) {
       if (!list) { list = document.createElement("ul"); el.appendChild(list); }
       const li = document.createElement("li");
-      renderInline(line.slice(2), li);
+      inline(line.replace(/^[-•*]\s+/, ""), li);
       list.appendChild(li);
     } else {
-      list = null;                   // a non-bullet line closes the list
+      list = null;                     // a normal line closes the list
       const p = document.createElement("p");
-      renderInline(line, p);
+      inline(line, p);
       el.appendChild(p);
     }
   });
@@ -49,7 +48,6 @@ function bubble(who, text) {
   return el;
 }
 
-/* Three blinking dots while the agent works. Returned so we can remove it. */
 function typing() {
   const el = document.createElement("div");
   el.className = "msg them typing";
@@ -76,7 +74,7 @@ async function ask(message) {
     bubble("them", data.reply);
   } catch (err) {
     dots.remove();
-    bubble("them", "Sorry — I couldn't reach the server just then. Try again?");
+    bubble("them", "The front desk is offline. Start the server and try again.");
   } finally {
     send.disabled = false;
     input.focus();
@@ -90,7 +88,18 @@ input.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && input.value.trim()) ask(input.value.trim());
 });
 
-/* Suggestion chips -- makes the demo repeatable without typing on camera. */
-document.querySelectorAll("#suggestions button").forEach((btn) => {
-  btn.addEventListener("click", () => ask(btn.textContent.trim()));
+/* Chips fill the composer rather than sending. On camera this matters: you
+   click, the question appears in the input, then you press send — so the
+   viewer sees a person asking rather than text materialising in the thread. */
+document.querySelectorAll("#chips button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    input.value = btn.textContent.trim();
+    input.focus();
+  });
 });
+
+/* Scroll reveal — toggles rather than unobserving, so it reverses on scroll up. */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => e.target.classList.toggle("seen", e.isIntersecting));
+}, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+document.querySelectorAll(".reveal").forEach((n) => io.observe(n));

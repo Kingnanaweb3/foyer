@@ -3,32 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Foyer — Approval queue</title>
+<title>Foyer — approval queue</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Karla:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Karla:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
-<body class="admin-page">
+<body>
 
-<nav class="topbar">
+<div class="glowfield" aria-hidden="true"><i class="g1"></i><i class="g2"></i><i class="g3"></i></div>
+<div class="dots" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav">
   <a class="wordmark" href="/">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span class="mark">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    </span>
     Foyer
   </a>
-  <a class="topbar-link" href="/">Community view &rarr;</a>
+  <div class="navlinks">
+    <a href="/">Front desk</a>
+    <a href="https://github.com/Kingnanaweb3/foyer">Source</a>
+  </div>
+  <a class="cta" href="/">Open front desk</a>
 </nav>
 
-<main class="admin-shell">
-
+<main class="admin">
   <header class="admin-head">
-    <p class="mono-label">Riverside Community Trust — Administrator</p>
-    <h1>Nothing reaches a donor<span class="muted"> until you say so.</span></h1>
+    <p class="status-line"><i class="pulse"></i>Riverside Community Trust — administrator</p>
+    <h1>Nothing reaches a donor <span class="tint">until you say so.</span></h1>
     <p class="lead">Foyer answers routine questions on its own. Anything that touches
-      a donor stops here first, with the reasoning attached.</p>
+      a donor waits here, with the reasoning that led to it.</p>
   </header>
 
-  <section class="queue-block">
+  <section class="block">
     <div class="block-head">
       <h2>Waiting on you</h2>
       <span class="count" id="pending-count">—</span>
@@ -36,14 +45,13 @@
     <div id="queue"><p class="empty">Loading queue…</p></div>
   </section>
 
-  <section class="log-block">
+  <section class="block">
     <div class="block-head">
       <h2>Decision log</h2>
-      <span class="hint">Every action, in plain language</span>
+      <span class="hint">Every action, agent and human, in plain language</span>
     </div>
     <div id="log"><p class="empty">Loading log…</p></div>
   </section>
-
 </main>
 
 <script src="/admin.js"></script>
