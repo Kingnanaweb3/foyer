@@ -4,3 +4,4 @@ __pycache__/
 .DS_Store
 .bedrock_agentcore.yaml
 Dockerfile
+.env

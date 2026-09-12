@@ -1,12 +1,22 @@
-"""Single source of truth for which Bedrock model every agent uses.
+"""Model provider for all Foyer agents.
 
-Strands defaults to a `global.` cross-region inference profile, which many
-accounts can't invoke. Pinning to a regional profile here means one edit
-changes all three agents.
+Groq via Strands' OpenAI-compatible provider. Strands is model-agnostic,
+so switching providers touches only this file.
 
-To see what your account can actually call:
-  aws bedrock list-inference-profiles --region us-east-1 \
-    --query "inferenceProfileSummaries[?contains(inferenceProfileId,'claude')].inferenceProfileId" \
-    --output table
+Requires GROQ_API_KEY, read from .env (never committed) or the environment.
 """
-MODEL_ID = "us.anthropic.claude-sonnet-4-6"
+import os
+
+from dotenv import load_dotenv
+from strands.models.openai import OpenAIModel
+
+load_dotenv()
+
+MODEL = OpenAIModel(
+    client_args={
+        "api_key": os.environ["GROQ_API_KEY"],
+        "base_url": "https://api.groq.com/openai/v1",
+    },
+    model_id="openai/gpt-oss-120b",
+    params={"max_tokens": 4000, "temperature": 0.3},
+)

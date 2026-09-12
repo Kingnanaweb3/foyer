@@ -147,15 +147,24 @@ h2 { font-size: 21px; line-height: 1.18; letter-spacing: -0.024em; }
   display: inline-block; }
 
 .thread {
-  flex: 1; overflow-y: auto;
+  flex: 1; min-width: 0; overflow-y: auto;
   padding: 22px 20px; display: flex; flex-direction: column; gap: 12px;
   background: #FDFCFA;
 }
-.msg { max-width: 82%; }
+.msg { max-width: 82%; min-width: 0; }
 .msg p {
   margin: 0; padding: 11px 15px; border-radius: 16px;
   font-size: 14px; line-height: 1.55;
+  overflow-wrap: anywhere;   /* emails and URLs must break, not overflow */
 }
+/* agent replies arrive as light markdown; these style the parsed result */
+.msg p strong { font-weight: 600; color: var(--ink); }
+.msg.me p strong { color: #FFFFFF; }
+.msg ul {
+  margin: 8px 0 0; padding: 0 0 0 18px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.msg li { font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
 .msg.them p { background: #F2EDE6; color: var(--ink-2); border-bottom-left-radius: 5px; }
 .msg.me { align-self: flex-end; }
 .msg.me p { background: var(--ink); color: #FBF8F4; border-bottom-right-radius: 5px; }

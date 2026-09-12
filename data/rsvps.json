@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "event": "Fall Food Drive",
+    "name": "Ada Obi",
+    "email": "ada@example.com"
+  },
+  {
+    "event": "Fall Food Drive",
+    "name": "Ada Obi",
+    "email": "ada@example.com"
+  }
+]

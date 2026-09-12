@@ -4,7 +4,7 @@ pattern) so the orchestrator can decide which specialist should handle an
 incoming message.
 """
 from strands import Agent, tool
-from config import MODEL_ID
+from config import MODEL
 from agents.front_desk import front_desk_agent
 from agents.donor_steward import donor_steward_agent
 
@@ -20,12 +20,15 @@ def ask_donor_steward(message: str) -> str:
 
 foyer = Agent(
     name="foyer_orchestrator",
-    model=MODEL_ID,
+    model=MODEL,
     system_prompt=(
         "You are Foyer, the front door for a small nonprofit with no dedicated "
         "coordinator. Route community/event questions to ask_front_desk, and "
         "donor-related requests to ask_donor_steward. Don't try to answer either "
-        "kind of question yourself — always delegate."
+        "kind of question yourself — always delegate. Return the "
+        "sub-agent's response to the user verbatim. Do not summarize it, "
+        "rephrase it, or replace it with a status update."
     ),
     tools=[ask_front_desk, ask_donor_steward],
+    callback_handler=None,
 )

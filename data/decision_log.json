@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "timestamp": "2026-09-12T13:09:23.729764+00:00",
+    "agent": "donor_steward",
+    "action": "provided lapsing donor list",
+    "reason": "User asked if any donors are lapsing; responded with identified lapsing donors."
+  },
+  {
+    "timestamp": "2026-09-12T13:09:30.160919+00:00",
+    "agent": "front_desk",
+    "action": "attempted RSVP",
+    "reason": "Tunde Bello attempted to RSVP for volunteer orientation but event is full"
+  },
+  {
+    "timestamp": "2026-09-12T13:14:52.163362+00:00",
+    "agent": "donor_steward",
+    "action": "queued re-engagement message draft for Maria Chen",
+    "reason": "Prepared a personalized re-engagement draft and placed it in the approval queue to ensure compliance before sending."
+  },
+  {
+    "timestamp": "2026-09-12T14:13:39.328525+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_1)",
+    "reason": "Reviewed by a human and approved."
+  },
+  {
+    "timestamp": "2026-09-12T14:21:05.320192+00:00",
+    "agent": "donor_steward",
+    "action": "queued re-engagement draft for lapsing donor",
+    "reason": "Identified James Okafor as lapsing; drafted and queued re-engagement message for human approval."
+  },
+  {
+    "timestamp": "2026-09-12T14:22:43.246095+00:00",
+    "agent": "donor_steward",
+    "action": "queued re-engagement draft for longest lapsing donor",
+    "reason": "Identified James Okafor as the donor with the longest gap; drafted and queued re-engagement message for human approval."
+  },
+  {
+    "timestamp": "2026-09-12T14:34:21.621433+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_3)",
+    "reason": "Reviewed by a human and approved."
+  },
+  {
+    "timestamp": "2026-09-12T14:34:22.396792+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_2)",
+    "reason": "Reviewed by a human and approved."
+  }
+]

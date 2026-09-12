@@ -6,7 +6,7 @@ from tools.store import load, save
 @tool
 def get_event_info(event_name: str) -> str:
     """
-    Look up date, location, parking, and remaining spots for an event.
+    Look up date, time, location, parking, and remaining spots for an event.
 
     Args:
         event_name: name (or partial name) of the event, e.g. "food drive"
@@ -17,7 +17,8 @@ def get_event_info(event_name: str) -> str:
         return f"No event found matching '{event_name}'."
     spots_left = match["capacity"] - match["spots_taken"]
     return (
-        f"{match['name']} — {match['date']} at {match['location']}. "
+        f"{match['name']} — {match['date']}, {match['time']}, "
+        f"at {match['location']}. "
         f"Parking: {match['parking']}. Spots left: {spots_left}/{match['capacity']}."
     )
 
