@@ -42,7 +42,7 @@ function renderCard(item) {
 }
 
 async function decide(id, decision) {
-  await fetch(`/api/approvals/${id}/${decision}`, {
+  await fetch(`${window.FOYER_API}/api/approvals/${id}/${decision}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ note: "" }),
@@ -53,7 +53,7 @@ async function decide(id, decision) {
 async function refresh() {
   try {
     const [aRes, lRes] = await Promise.all([
-      fetch("/api/approvals"), fetch("/api/log"),
+      fetch(`${window.FOYER_API}/api/approvals`), fetch(`${window.FOYER_API}/api/log`),
     ]);
     const { pending } = await aRes.json();
     const { entries } = await lRes.json();

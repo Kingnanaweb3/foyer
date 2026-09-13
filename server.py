@@ -11,6 +11,7 @@ record the submission demo in this mode.
 """
 import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -20,6 +21,17 @@ from governance.queue import list_all, list_pending, decide, read_log
 DEMO_MODE = os.getenv("FOYER_DEMO_MODE") == "1"
 
 app = FastAPI(title="Foyer")
+
+# The frontend is served from Vercel and the API from Railway, so every call
+# is cross-origin. FOYER_ORIGINS is a comma-separated allowlist; it falls back
+# to "*" so local development and the Railway-hosted copy both keep working.
+_origins = os.getenv("FOYER_ORIGINS", "*")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"] if _origins == "*" else [o.strip() for o in _origins.split(",")],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
 
 class ChatIn(BaseModel):

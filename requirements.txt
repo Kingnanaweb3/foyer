@@ -1,6 +1,6 @@
 strands-agents>=1.0.0
 strands-agents-tools>=0.2.0
+strands-agents[openai]>=1.0.0
+python-dotenv>=1.0.0
 fastapi>=0.110.0
 uvicorn>=0.29.0
-fastapi==0.141.1
-uvicorn==0.52.4

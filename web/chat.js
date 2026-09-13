@@ -64,7 +64,7 @@ async function ask(message) {
   const dots = typing();
 
   try {
-    const res = await fetch("/api/chat", {
+    const res = await fetch(`${window.FOYER_API}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),
