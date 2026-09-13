@@ -1,14 +1,1 @@
-[
-  {
-    "timestamp": "2026-09-13T14:26:27.285865+00:00",
-    "agent": "human_admin",
-    "action": "approved donor_message (appr_1)",
-    "reason": "Reviewed by a human and approved."
-  },
-  {
-    "timestamp": "2026-09-13T14:26:28.361662+00:00",
-    "agent": "system",
-    "action": "sent message to James Okafor",
-    "reason": "delivered to kinnahjoshua67@gmail.com"
-  }
-]
+[]

@@ -1,15 +1,1 @@
-[
-  {
-    "id": "appr_1",
-    "timestamp": "2026-09-13T12:00:00+00:00",
-    "agent": "donor_steward",
-    "action_type": "donor_message",
-    "content": "Hi James, it's been a little while since we last heard from you. Your past support ($1200 over 4 gifts) has made a real difference.",
-    "reason": "James Okafor last gave 194 days ago; usual gap is 45 days.",
-    "status": "approved",
-    "decided_at": "2026-09-13T14:26:27.285865+00:00",
-    "note": "",
-    "delivered": true,
-    "delivery_detail": "delivered to kinnahjoshua67@gmail.com"
-  }
-]
+[]
