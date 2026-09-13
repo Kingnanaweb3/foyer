@@ -15,6 +15,7 @@
 <div class="dots" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
+<a id="top"></a>
 <nav class="nav">
   <a class="wordmark" href="/">
     <span class="mark">
@@ -110,6 +111,246 @@
     </div>
   </div>
 </section>
+
+
+<section class="band">
+  <div class="band-inner">
+    <div class="band-head reveal">
+      <h2>One message in. Four decisions out.</h2>
+    </div>
+
+    <div class="flow">
+      <div class="step reveal">
+        <span class="step-n">01</span>
+        <div>
+          <h3>The orchestrator reads the message and picks a specialist</h3>
+          <p>It does not answer anything itself. A question about parking goes to
+            the Front Desk. A question about a donor goes to the Donor Steward.
+            Both sub-agents are exposed to it as tools, so routing is a decision
+            it makes and logs, not a keyword match.</p>
+          <div class="tools"><code>ask_front_desk</code><code>ask_donor_steward</code></div>
+        </div>
+      </div>
+
+      <div class="step reveal" style="--d: 80ms">
+        <span class="step-n">02</span>
+        <div>
+          <h3>The Front Desk acts on its own</h3>
+          <p>Event times, parking, remaining spots, sign-ups. It can write an RSVP
+            straight to the roster and refuse one when an event is full. These are
+            small and reversible, so nobody needs to approve them.</p>
+          <div class="tools"><code>get_event_info</code><code>make_rsvp</code></div>
+        </div>
+      </div>
+
+      <div class="step reveal gate" style="--d: 160ms">
+        <span class="step-n">03</span>
+        <div>
+          <h3>The Donor Steward drafts, but cannot send</h3>
+          <p>It reads giving history, spots donors who have drifted past their own
+            pattern, and writes the message. Then it stops. There is no send tool
+            in its hands to reach for — the draft goes to the approval queue with
+            the reasoning that produced it, and waits.</p>
+          <div class="tools"><code>get_donor_profile</code><code>check_lapsing_donors</code><code>draft_followup_message</code><code>queue_approval</code></div>
+        </div>
+      </div>
+
+      <div class="step reveal" style="--d: 240ms">
+        <span class="step-n">04</span>
+        <div>
+          <h3>Every action lands in one log</h3>
+          <p>What the agent did, why it did it, and what the human decided —
+            written in language a board member can read without a technical
+            briefing. Approvals and rejections go in the same trail as the
+            agent's own actions.</p>
+          <div class="tools"><code>log_decision</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="band tinted">
+  <div class="band-inner">
+    <div class="band-head reveal">
+      <h2>Three surfaces. One trail.</h2>
+    </div>
+
+    <div class="trio">
+
+      <div class="slab reveal">
+        <div class="stage">
+          <div class="m-bubble me">When is the food drive and where do I park?</div>
+          <div class="m-bubble them">September 20, 10am to 2pm at the Community
+            Center. Free parking in the lot behind the building.</div>
+          <div class="m-bubble me">Can you sign up Ada Obi?</div>
+          <div class="m-bubble them">Done — Ada is registered. 17 spots left.</div>
+        </div>
+        <span class="slab-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          FRONT DESK
+        </span>
+        <p>Answers the questions that arrive over and over, and writes RSVPs
+          straight to the roster. Small, reversible, no approval needed.</p>
+      </div>
+
+      <div class="slab reveal" style="--d: 90ms">
+        <div class="stage">
+          <div class="m-row"><span><b>Priya Nair</b> · first gift</span><span class="m-meta">15d</span></div>
+          <div class="m-row flagged"><span><b>Maria Chen</b> · usual gap 30d</span><span class="m-meta">59d</span></div>
+          <div class="m-row flagged"><span><b>James Okafor</b> · usual gap 45d</span><span class="m-meta">194d</span></div>
+          <div class="m-row"><span><b>2 donors</b> past their pattern</span><span class="m-meta">flagged</span></div>
+        </div>
+        <span class="slab-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          DONOR STEWARD
+        </span>
+        <p>Measures each donor against their own giving rhythm, not a generic
+          threshold. Someone who gives monthly is late at 45 days; someone who
+          gives twice a year is not.</p>
+      </div>
+
+      <div class="slab reveal" style="--d: 180ms">
+        <div class="stage">
+          <div class="m-card">
+            <div class="m-why">James Okafor last gave 194 days ago; his usual
+              gap is 45 days.</div>
+            <div class="m-draft">Hi James, it's been a little while since we last
+              heard from you…</div>
+            <div class="m-btns">
+              <span class="m-btn">Approve and send</span>
+              <span class="m-btn ghost">Reject</span>
+            </div>
+          </div>
+          <div class="m-log">
+            <b>approved donor_message</b>
+            <span>Reviewed by a human and approved.</span>
+            <span class="m-meta">human_admin · 4:22 PM</span>
+          </div>
+        </div>
+        <span class="slab-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          THE GATE
+        </span>
+        <p>Nothing donor-facing leaves without a person tapping approve. The
+          reasoning travels with the draft, and the decision joins the same log
+          as the agent's own actions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="band">
+  <div class="band-inner">
+
+    <div class="center-head reveal">
+      <span class="eyebrow">WHY IT GETS SWITCHED ON</span>
+      <h2>Explainable, or unusable.</h2>
+    </div>
+
+    <div class="split">
+
+      <div class="showcase reveal">
+        <div class="showcase-top"><span>DECISION LOG</span><span>4 ENTRIES</span></div>
+        <div class="m-log">
+          <b>provided event info</b>
+          <span>Someone asked for the date and parking details of the food drive.</span>
+          <span class="m-meta">front_desk · 12:48 PM</span>
+        </div>
+        <div class="m-log">
+          <b>attempted RSVP</b>
+          <span>Tunde Bello asked to join the volunteer orientation, but the event
+            is full.</span>
+          <span class="m-meta">front_desk · 1:09 PM</span>
+        </div>
+        <div class="m-log">
+          <b>queued re-engagement draft</b>
+          <span>James Okafor last gave 194 days ago against a 45-day pattern.
+            Drafted a message and placed it in the approval queue.</span>
+          <span class="m-meta">donor_steward · 3:22 PM</span>
+        </div>
+        <div class="m-log">
+          <b>approved donor_message</b>
+          <span>Reviewed by a human and approved.</span>
+          <span class="m-meta">human_admin · 4:22 PM</span>
+        </div>
+      </div>
+
+      <div class="split-copy reveal" style="--d: 90ms">
+        <p>Small nonprofits run on volunteers and rotating boards. The person who
+          set the agent up may not be there in a year. So the question is never
+          just whether it worked — it is whether anyone can explain what it did.</p>
+
+        <div class="points">
+          <div class="point">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <div>
+              <b>The boundary is structural</b>
+              <span>The Donor Steward has no send tool in its registry. There is
+                nothing to reach for.</span>
+            </div>
+          </div>
+
+          <div class="point">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            <div>
+              <b>Written for a reader</b>
+              <span>Plain language, not structured logs. A board member reads the
+                trail cold.</span>
+            </div>
+          </div>
+
+          <div class="point">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <div>
+              <b>One trail, not two</b>
+              <span>Human approvals are logged beside the agent's own actions.</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="ghost" href="https://aws.amazon.com/blogs/publicsector/a-governance-framework-for-nonprofit-agentic-ai-on-aws/">AWS on nonprofit agent governance</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="band tinted">
+  <div class="band-inner closing reveal">
+    <h2>Ask it something.</h2>
+    <p class="lead">The front desk above is live. Queue a donor message and it will
+      be waiting in the approval panel, reasoning attached.</p>
+    <div class="closing-actions">
+      <a class="cta" href="#top">Try the front desk</a>
+      <a class="ghost" href="/admin.html">Open the approval panel</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="wordmark" href="/">
+      <span class="mark">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      </span>
+      Foyer
+    </a>
+    <div class="foot-links">
+      <a href="/admin.html">Approval panel</a>
+      <a href="https://github.com/Kingnanaweb3/foyer">Source</a>
+      <a href="https://github.com/Kingnanaweb3/foyer/blob/main/LICENSE">MIT license</a>
+    </div>
+  </div>
+  <p class="foot-note">Built with the Strands Agents SDK for the AWS Agents for
+    Humans Hackathon — Good Neighbor Agents. Riverside Community Trust is a
+    fictional organisation; all donors and events shown are sample data.</p>
+</footer>
 
 <script src="/chat.js"></script>
 </body>

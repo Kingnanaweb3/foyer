@@ -494,3 +494,414 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ---------- numbered flow ----------
+   A real sequence, so it gets numbers. Step 3 is the only one that carries
+   the accent, because it's the only one where a human enters the loop. */
+.flow { display: flex; flex-direction: column; gap: 14px; }
+
+.step {
+  display: grid; grid-template-columns: 46px minmax(0, 1fr);
+  gap: 22px; align-items: start;
+  padding: 26px 28px; border-radius: 18px;
+  background: linear-gradient(150deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+  border: 1px solid var(--hair);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 24px 56px -32px rgba(0,0,0,0.8),
+              inset 0 1px 0 rgba(255,255,255,0.09);
+}
+.step-n {
+  width: 46px; height: 46px; border-radius: 14px;
+  display: grid; place-items: center;
+  font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 14px;
+  color: var(--text-3);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.step h3 { margin-bottom: 9px; }
+.step p { margin: 0; font-size: 14.5px; line-height: 1.68; color: var(--text-2); }
+
+/* the gate: the one step where a human decides, so the one step in violet */
+.step.gate {
+  background: linear-gradient(150deg, rgba(108,92,231,0.13), rgba(108,92,231,0.035));
+  border-color: rgba(108,92,231,0.34);
+  box-shadow: 0 24px 60px -30px rgba(108,92,231,0.55),
+              inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.step.gate .step-n {
+  color: #fff; border-color: rgba(255,255,255,0.2);
+  background: linear-gradient(145deg, var(--accent, #6C5CE7), #5A49DC);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* the tool names each agent actually has — concrete beats adjectives */
+.tools {
+  display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px;
+}
+.tools code {
+  font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11.5px;
+  color: var(--text-3); padding: 5px 11px; border-radius: 7px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--hair);
+}
+
+@media (max-width: 620px) {
+  .step { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 22px; }
+}
+
+/* ============================================================
+   TRIO — three glass cards, each showing the surface it describes.
+   The mock is the argument; the copy underneath is the caption.
+   ============================================================ */
+.trio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  gap: 18px;
+}
+.slab {
+  display: flex; flex-direction: column; min-width: 0;
+  border-radius: 20px; padding: 26px;
+  background: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014));
+  border: 1px solid var(--hair);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 28px 64px -34px rgba(0,0,0,0.85),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+}
+/* the mock sits in its own well so it reads as a screen, not decoration */
+.stage {
+  flex: 1; min-height: 268px; margin-bottom: 26px;
+  display: flex; flex-direction: column; gap: 9px; justify-content: center;
+}
+.slab-label {
+  display: inline-flex; align-items: center; gap: 9px; margin-bottom: 11px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: 0.04em; color: var(--text-3);
+}
+.slab-label svg { color: var(--text-3); }
+.slab p {
+  margin: 0; font-size: 14.5px; line-height: 1.66; color: var(--text-2);
+}
+
+/* ---- mock primitives ---- */
+.m-bubble {
+  font-size: 12.5px; line-height: 1.5; padding: 10px 13px; border-radius: 13px;
+  background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text-2); max-width: 88%;
+}
+.m-bubble.me {
+  align-self: flex-end; background: rgba(255,255,255,0.11); color: var(--text);
+  border-bottom-right-radius: 5px;
+}
+.m-bubble.them { border-bottom-left-radius: 5px; }
+
+.m-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  font-size: 12.5px; color: var(--text-2);
+}
+.m-row b { font-weight: 500; color: var(--text); }
+.m-meta {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px; color: var(--text-3); white-space: nowrap;
+}
+.m-row.flagged {
+  background: rgba(108,92,231,0.11); border-color: rgba(108,92,231,0.3);
+}
+.m-row.flagged .m-meta { color: var(--accent-2); }
+
+.m-card {
+  padding: 14px; border-radius: 13px;
+  background: rgba(108,92,231,0.11); border: 1px solid rgba(108,92,231,0.32);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.m-why {
+  font-size: 11.5px; line-height: 1.5; color: var(--text-3);
+  padding-bottom: 11px; margin-bottom: 11px;
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+.m-draft { font-size: 12.5px; line-height: 1.55; color: var(--text-2); }
+.m-btns { display: flex; gap: 7px; margin-top: 13px; }
+.m-btn {
+  font-family: "Inter", sans-serif; font-size: 11.5px; font-weight: 500;
+  padding: 7px 14px; border-radius: 8px; color: #fff;
+  background: linear-gradient(145deg, var(--accent, #6C5CE7), #5A49DC);
+}
+.m-btn.ghost {
+  background: rgba(255,255,255,0.05); color: var(--text-2);
+  border: 1px solid var(--hair);
+}
+
+.m-log {
+  padding: 11px 13px; border-radius: 11px;
+  background: rgba(255,255,255,0.032); border: 1px solid rgba(255,255,255,0.06);
+}
+.m-log b {
+  display: block; font-family: "Inter", sans-serif; font-weight: 500;
+  font-size: 12.5px; color: var(--text); margin-bottom: 3px;
+}
+.m-log span { font-size: 11.5px; line-height: 1.5; color: var(--text-3); }
+.m-log .m-meta { display: block; margin-top: 5px; }
+
+/* ============================================================
+   HERO PANEL — dark glass override
+   Matches the trio mocks exactly (same gradient, blur and bubble alphas),
+   so the live panel and the illustrated ones read as one system.
+   Appended last so these win over the light-panel rules above.
+   ============================================================ */
+.panel {
+  background: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014));
+  border: 1px solid var(--hair);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 40px 90px -40px rgba(0,0,0,0.9),
+              0 8px 34px -14px rgba(108,92,231,0.34),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.panel-head { border-bottom: 1px solid rgba(255,255,255,0.075); }
+.panel-head strong { color: var(--text); }
+.sub { color: var(--text-3); }
+.who {
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.11);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+  color: var(--text-2);
+}
+
+.thread::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+
+.msg.them > * {
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text-2);
+}
+.msg.me > * {
+  background: rgba(255,255,255,0.11);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: var(--text);
+}
+.msg strong, .msg.me strong { color: var(--text); }
+.msg li::before { background: var(--accent-2); }
+
+.typing span { background: rgba(255,255,255,0.4); }
+
+.composer {
+  background: transparent;
+  border-top: 1px solid rgba(255,255,255,0.075);
+}
+.composer input {
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text);
+}
+.composer input::placeholder { color: var(--text-3); }
+.composer input:focus {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(108,92,231,0.5);
+}
+
+/* ============================================================
+   TRUST — the argument section. Wider measure, quieter furniture,
+   one pull-quote carrying the outside evidence.
+   ============================================================ */
+.argument {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  gap: clamp(36px, 5vw, 72px); align-items: start;
+}
+.argument p {
+  font-size: clamp(15.5px, 1.35vw, 17px); line-height: 1.74;
+  color: var(--text-2); margin: 0 0 20px; max-width: 56ch;
+}
+.argument p:last-child { margin-bottom: 0; }
+.argument strong { color: var(--text); font-weight: 400; }
+
+/* the source card: evidence from outside the project, so it looks like a
+   citation rather than a testimonial */
+.source {
+  padding: 26px; border-radius: 18px;
+  background: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014));
+  border: 1px solid var(--hair);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 28px 64px -34px rgba(0,0,0,0.85),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.source-tag {
+  display: block; margin-bottom: 16px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.05em; color: var(--text-3);
+}
+.source blockquote {
+  margin: 0 0 18px; font-size: 15px; line-height: 1.66; color: var(--text);
+}
+.source cite {
+  display: block; font-style: normal; font-size: 13px; line-height: 1.6;
+  color: var(--text-3);
+}
+.source a {
+  color: var(--accent-2); text-decoration: none;
+  border-bottom: 1px solid rgba(155,139,245,0.3);
+}
+.source a:hover { border-bottom-color: var(--accent-2); }
+
+/* two claims, each with the mechanism that backs it */
+.claims { display: grid; gap: 14px; margin-top: 44px; }
+.claim {
+  display: grid; grid-template-columns: 20px minmax(0, 1fr);
+  gap: 16px; align-items: start;
+  padding: 20px 22px; border-radius: 15px;
+  background: rgba(255,255,255,0.028); border: 1px solid var(--hair);
+}
+.claim svg { margin-top: 3px; color: var(--accent-2); }
+.claim b {
+  display: block; font-family: "Inter", sans-serif; font-weight: 500;
+  font-size: 15px; color: var(--text); margin-bottom: 5px;
+  letter-spacing: -0.012em;
+}
+.claim span { font-size: 14px; line-height: 1.64; color: var(--text-2); }
+
+@media (max-width: 900px) {
+  .argument { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================
+   CENTERED BAND — eyebrow, headline, subhead, then a split below
+   ============================================================ */
+.center-head { text-align: center; margin-bottom: clamp(44px, 5vw, 70px); }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: 0.06em; color: var(--text-3);
+}
+.eyebrow::before {
+  content: ""; width: 22px; height: 11px; border-radius: 999px;
+  background: rgba(255,255,255,0.07); border: 1px solid var(--hair);
+}
+.center-head h2 { margin: 0 auto; max-width: 20ch; }
+.center-head .lead {
+  margin: 18px auto 0; max-width: 48ch; text-align: center;
+}
+
+.split {
+  display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  gap: clamp(36px, 5vw, 76px); align-items: start;
+}
+
+/* the tall visual card — the artifact itself, not an illustration */
+.showcase {
+  border-radius: 20px; padding: 24px; min-width: 0;
+  display: flex; flex-direction: column; gap: 10px;
+  background: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014));
+  border: 1px solid var(--hair);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 28px 64px -34px rgba(0,0,0,0.85),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.showcase-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 16px; margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.075);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.05em; color: var(--text-3);
+}
+
+.split-copy p {
+  font-size: clamp(15.5px, 1.35vw, 17px); line-height: 1.72;
+  color: var(--text-2); margin: 0 0 34px; max-width: 48ch;
+}
+.split-copy strong { color: var(--text); font-weight: 400; }
+
+.points { display: grid; gap: 26px; margin-bottom: 34px; }
+.point {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 15px;
+  align-items: start;
+}
+.point svg { margin-top: 3px; color: var(--text-2); }
+.point b {
+  display: block; font-family: "Inter", sans-serif; font-weight: 500;
+  font-size: 16px; letter-spacing: -0.014em; color: var(--text); margin-bottom: 6px;
+}
+.point span { font-size: 14.5px; line-height: 1.66; color: var(--text-2); }
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .center-head h2 { max-width: 100%; }
+}
+
+/* ---------- alignment pass ----------
+   One left edge for the whole right column: intro paragraph, point titles and
+   point descriptions all start at the same x. The icon sits inline with its
+   title rather than in its own grid track, which was creating a second edge. */
+.split { align-items: stretch; }
+.showcase { justify-content: flex-start; }
+
+.split-copy { display: flex; flex-direction: column; }
+
+.point { display: block; }
+.point-head {
+  display: flex; align-items: center; gap: 11px; margin-bottom: 8px;
+}
+.point-head svg { flex: 0 0 auto; margin-top: 0; color: var(--text-2); }
+.point-head b { margin-bottom: 0; }
+.point span { display: block; }
+
+/* button drops to the bottom so it lines up with the base of the log card */
+.split-copy > .ghost { margin-top: auto; align-self: flex-start; }
+.points { margin-bottom: 34px; }
+
+/* ---------- reference-tight typography ----------
+   No mid-paragraph emphasis: the reference holds one weight through the prose
+   and lets the point titles carry all the hierarchy. Descriptions indent under
+   their title, not under the icon — the icon column is a margin, not an edge.
+   Narrow measure so nothing runs past three lines. */
+.split-copy p {
+  font-size: 16.5px; line-height: 1.62; max-width: 38ch; margin-bottom: 44px;
+}
+.split-copy strong { color: inherit; font-weight: inherit; }
+
+.points { gap: 30px; margin-bottom: 40px; }
+.point {
+  display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 14px;
+  align-items: start;
+}
+.point-head { display: contents; }          /* undo the inline-title change */
+.point svg { margin-top: 2px; }
+.point b {
+  font-size: 16.5px; line-height: 1.4; margin-bottom: 4px;
+  letter-spacing: -0.012em;
+}
+.point span {
+  display: block; font-size: 15px; line-height: 1.58;
+  color: var(--text-3); max-width: 34ch;
+}
+
+/* ============================================================
+   CLOSING + FOOTER
+   ============================================================ */
+.closing { text-align: center; }
+.closing h2 { margin: 0 auto 20px; max-width: 18ch; }
+.closing .lead { margin: 0 auto 34px; max-width: 46ch; }
+.closing-actions {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+
+.foot {
+  position: relative; z-index: 4;
+  border-top: 1px solid var(--hair);
+  padding: 34px clamp(22px, 5vw, 60px);
+}
+.foot-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.foot .wordmark { margin-right: auto; font-size: 15px; }
+.foot .mark { width: 24px; height: 24px; flex: 0 0 24px; border-radius: 7px; }
+.foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+.foot-links a {
+  font-size: 13.5px; color: var(--text-3); text-decoration: none;
+  transition: color .18s ease;
+}
+.foot-links a:hover { color: var(--text); }
+.foot-note {
+  max-width: 1160px; margin: 22px auto 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; line-height: 1.7; color: var(--text-3);
+}
