@@ -905,3 +905,17 @@ h2 {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px; line-height: 1.7; color: var(--text-3);
 }
+
+/* ---------- brand mark ----------
+   The glyph carries the brand now, so the tile behind it steps back to plain
+   glass. A violet tile under a violet glyph would double the accent inside
+   one 28px square. */
+.mark {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+  color: var(--violet-2);
+  padding: 5px;
+}
+.mark svg { width: 100%; height: 100%; display: block; }
+.foot .mark { padding: 4px; }
