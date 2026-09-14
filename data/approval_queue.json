@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "appr_1",
+    "timestamp": "2026-09-14T09:56:39.432167+00:00",
+    "agent": "donor_steward",
+    "action_type": "donor_message",
+    "content": "Hi James, it's been a little while since we last heard from you. Your past support ($1200 over 4 gifts) has made a real difference \u2014 we'd love to share a quick update on what that's helped us do.",
+    "reason": "Drafted a personalized re-engagement message for James Okafor, who last gave on 2026-03-02, to encourage renewed involvement.",
+    "status": "approved",
+    "decided_at": "2026-09-14T09:56:52.926271+00:00",
+    "note": "",
+    "delivered": true,
+    "delivery_detail": "delivered to kinnahjoshua67@gmail.com"
+  }
+]

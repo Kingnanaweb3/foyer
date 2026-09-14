@@ -1,153 +1,105 @@
-# Foyer
+# Recyv
 
-**An AI agent for small nonprofits that have no dedicated coordinator.**
+Get paid with a link. Crypto payment links settling on Robinhood Chain.
 
-Built with the [Strands Agents SDK](https://strandsagents.com) for the AWS
-*Agents for Humans* Hackathon — **Good Neighbor Agents** track.
+```
+Create → Share → Pay → Receive
+```
+
+## Run it
+
+```bash
+npm install
+cp .env.example .env.local   # fill CHAIN_ID and RPC_URL
+npm run dev
+```
+
+Two values in `.env.local` are the only things standing between this and a
+working app: `NEXT_PUBLIC_CHAIN_ID` and `NEXT_PUBLIC_RPC_URL`. Everything else
+has a default.
+
+## What's here
+
+| Path | Does |
+|---|---|
+| `app/page.tsx` | Create a request, get a link + QR |
+| `app/r/[id]/page.tsx` | Public payment page |
+| `app/dashboard/page.tsx` | Payments received, read from Transfer logs |
+| `lib/token-config.ts` | **The fast token swap** |
+| `lib/link.ts` | Request ⇄ link encoding |
+| `lib/chain.ts` | Chain + ERC-20 constants |
+
+Payment requests are encoded into the link itself, so there's no database to
+stand up before the demo. Move to short ids (`recyv.xyz/r/8Kx29A`) with a KV
+store when you want branded links.
 
 ---
 
-## The problem
+## Launch-day runbook: swapping the token CA
 
-Small nonprofits run on volunteers. Nobody is paid to answer "when's the food
-drive?" for the fortieth time, and nobody has time to notice that a reliable
-donor quietly stopped giving four months ago. Both jobs are repetitive,
-both are relationship work, and both get dropped.
+The address is **never baked into the build**. The app fetches
+`NEXT_PUBLIC_TOKEN_CONFIG_URL` every 5 seconds with `cache: no-store`, so
+changing it propagates to every open browser without a rebuild, a redeploy, or
+a reload.
 
-The obvious fix — hand it to an AI agent — runs into a second problem. AWS's own
-Public Sector research on
-[nonprofit agentic AI governance](https://aws.amazon.com/blogs/publicsector/a-governance-framework-for-nonprofit-agentic-ai-on-aws/)
-names why nonprofits hesitate: agents that run under uncontrolled accounts,
-agents whose decisions can't be explained, and no way to demonstrate to a board
-that sensitive data was handled properly.
+### Before launch
 
-So an agent that just *acts* isn't adoptable. It has to be accountable.
+Host the config somewhere you can edit in one action — Vercel Edge Config, a
+gist, an S3 object. Set `NEXT_PUBLIC_TOKEN_CONFIG_URL` to it and deploy. Serve
+it with `Cache-Control: no-store` and CORS open, or the poll will read a stale
+copy from a CDN.
 
-## What Foyer does
-
-**Front Desk** — answers community questions (event dates, location, parking,
-spots remaining) and handles RSVPs including capacity limits. These are
-low-risk, reversible actions, so it acts autonomously.
-
-**Donor Steward** — tracks giving history, detects donors lapsing against their
-own giving cadence, and drafts personalized re-engagement and thank-you
-messages. It has no ability to send anything.
-
-**The Approval Gate** — every donor-facing action is queued for a human, with a
-plain-language reason attached. The boundary isn't a rule the model is asked to
-remember; the Donor Steward simply has no "send" tool. No prompt can talk it
-into acting alone.
-
-**The Decision Log** — every action, by agent or human, lands in one continuous
-audit trail written in language a board member can read without a technical
-briefing.
-
-## Architecture
-
-![Foyer architecture](docs/architecture.png)
-
-A top-level orchestrator routes each inbound message to the right specialist
-using the *agents-as-tools* pattern. Both sub-agents share the governance layer.
-
-## Project structure
-
-```
-orchestrator.py         Routes messages to the right sub-agent
-config.py               Pinned Bedrock model ID (single source of truth)
-main.py                 CLI entry point
-server.py               FastAPI server for both web surfaces
-agentcore_app.py        Bedrock AgentCore Runtime entry point
-
-agents/
-  front_desk.py         Event info + RSVPs (autonomous, low-risk)
-  donor_steward.py      Donor tracking + drafting (gated by approval)
-
-tools/
-  store.py              JSON read/write helpers
-  front_desk_tools.py   get_event_info, make_rsvp
-  donor_tools.py        get_donor_profile, check_lapsing_donors,
-                        draft_followup_message
-
-governance/
-  tools.py              log_decision, queue_approval (agent-callable)
-  queue.py              Approve/reject operations (human-only, NOT tools)
-
-web/
-  index.html            Community chat surface
-  admin.html            Approval queue + decision log
-data/                   Mock dataset: events, donors, rsvps, logs
-docs/                   Architecture diagram
+```json
+{ "address": "0x0000…0000", "symbol": "RECYV", "decimals": 18, "live": false }
 ```
 
-**A note on `governance/queue.py`:** approve and reject are deliberately plain
-Python functions rather than `@tool`-decorated ones. Keeping them out of the
-tool registry is what makes the boundary structural instead of advisory.
+While `live` is false or the address is the zero address, the Pay button stays
+disabled and the page says so. Nothing silently sends funds to a placeholder.
 
-## Running locally
+### At launch — the ten seconds
 
-**Prerequisites:** Python 3.10+, an AWS account with Amazon Bedrock model access
-enabled in your region.
+1. Deploy the token, copy the CA.
+2. Paste it into the config, set `"live": true`. Save.
+3. Done. Every open tab flips within 5 seconds.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-aws configure          # access key, secret, region (us-east-1), json
-```
+### If the config host is slow or down
 
-Set the model your account has access to in `config.py`. To list what's
-available to you:
+Two overrides that need no infrastructure at all:
 
-```bash
-aws bedrock list-inference-profiles --region us-east-1 \
-  --query "inferenceProfileSummaries[?contains(inferenceProfileId,'claude')].inferenceProfileId" \
-  --output table
-```
+- **URL:** append `?token=0xABC…` to any Recyv page — takes effect on load,
+  that tab only. Good for the demo screen.
+- **Console:** `recyvSetToken("0xABC…")` — sticks in `localStorage` for that
+  browser.
 
-**CLI:**
-```bash
-python main.py
-```
+Both beat the hosted config, so you can go live from the podium even if the
+config edit hasn't landed.
 
-**Web (both surfaces):**
-```bash
-uvicorn server:app --reload
-```
-- Community chat → http://localhost:8000
-- Admin approval queue → http://localhost:8000/admin.html
+### Why the app calls `symbol()` and `decimals()` first
 
-### Offline UI mode
+A one-character typo in a pasted CA is an address that still looks valid.
+Before enabling payments the app reads the contract; if it doesn't answer like
+an ERC-20 on this chain, payments stay paused and the page says why. It costs
+one RPC round-trip and it's the difference between a paused demo and payments
+sent somewhere unrecoverable.
 
-`FOYER_DEMO_MODE=1` serves canned responses so the interface can be developed
-without Bedrock access. Useful for frontend work; not for evaluating the agent.
+**One thing worth locking down before mainnet, since you're going live for
+real:** whoever can write to that config URL controls where every payment
+button points. Put it behind auth you control — not a public gist you can also
+edit, and not a repo with the hackathon team's write access. This is the single
+highest-value target in the whole app, and it's outside anything a contract
+audit would look at.
 
-```bash
-FOYER_DEMO_MODE=1 uvicorn server:app --reload
-```
+---
 
-## Deploying to Amazon Bedrock AgentCore
+## Not done yet (deliberately out of MVP scope)
 
-```bash
-pip install "bedrock-agentcore-starter-toolkit>=0.1.21"
-agentcore configure -e agentcore_app.py
-agentcore launch
-```
+- Short link ids (needs a KV store)
+- Invoices, receipts, recurring payments — the V2/V3 roadmap
+- Chain switching if the wallet is on the wrong network
+- Rate limiting on the config poll for large traffic
 
-Press Enter at the execution-role prompt to auto-create a role with the required
-Runtime, Memory and Observability permissions.
+## Not built, and shouldn't be
 
-## Try it
-
-```
-When is the food drive and where do I park?
-Can you sign up Ada Obi for the food drive? ada@example.com
-Are any donors lapsing?
-Draft a re-engagement message for James Okafor
-```
-
-The last one won't send. It lands in the approval queue with its reasoning —
-open `/admin.html` to approve or reject it.
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+The token stays separate from the payment flow. Nobody should need to hold
+RECYV to pay a freelancer 50 USDC — that's the thing that makes this read as a
+real payment product rather than a token wrapper.

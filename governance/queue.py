@@ -49,6 +49,11 @@ def decide(approval_id: str, decision: str, note: str = ""):
     if target is None:
         return None
 
+    # Only a pending item can be decided. Without this a double click
+    # re-approves and sends the donor a second copy of the same message.
+    if target["status"] != "pending":
+        return target
+
     target["status"] = decision
     target["decided_at"] = datetime.now(timezone.utc).isoformat()
     target["note"] = note

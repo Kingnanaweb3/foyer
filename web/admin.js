@@ -41,12 +41,17 @@ function renderCard(item) {
   return card;
 }
 
+const deciding = new Set();
+
 async function decide(id, decision) {
+  if (deciding.has(id)) return;   // guard the double click before it leaves
+  deciding.add(id);
   await fetch(`${window.FOYER_API}/api/approvals/${id}/${decision}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ note: "" }),
   });
+  deciding.delete(id);
   refresh();
 }
 

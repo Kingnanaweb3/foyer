@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "timestamp": "2026-09-14T09:54:56.076484+00:00",
+    "agent": "front_desk",
+    "action": "provided event info",
+    "reason": "User asked for date and parking details of the food drive"
+  },
+  {
+    "timestamp": "2026-09-14T09:56:40.386164+00:00",
+    "agent": "donor_steward",
+    "action": "queued re-engagement draft for James Okafor",
+    "reason": "Prepared and queued a personalized re-engagement message for a donor who hasn't given since March 2026, awaiting human approval before sending."
+  },
+  {
+    "timestamp": "2026-09-14T09:56:52.038394+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_1)",
+    "reason": "Reviewed by a human and approved."
+  },
+  {
+    "timestamp": "2026-09-14T09:56:52.927547+00:00",
+    "agent": "system",
+    "action": "sent message to James Okafor",
+    "reason": "delivered to kinnahjoshua67@gmail.com"
+  },
+  {
+    "timestamp": "2026-09-14T09:56:52.926271+00:00",
+    "agent": "human_admin",
+    "action": "approved donor_message (appr_1)",
+    "reason": "Reviewed by a human and approved."
+  },
+  {
+    "timestamp": "2026-09-14T09:56:53.488250+00:00",
+    "agent": "system",
+    "action": "sent message to James Okafor",
+    "reason": "delivered to kinnahjoshua67@gmail.com"
+  }
+]
