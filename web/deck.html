@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Foyer — Agents for Humans, Good Neighbor track</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Karla:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Foyer deck — the site's tokens on the pitchdeck slide system.
+   Foyer's brand is the dark violet glass system, so the usual light
+   neutral base is swapped wholesale rather than just re-tinted.
+   ============================================================ */
+:root {
+  --ink:     #F2F1F6;
+  --ink-2:   #A8A4B8;
+  --ink-3:   #736F82;
+  --border:  rgba(255,255,255,0.09);
+  --brand-1: #6C5CE7;
+  --brand-2: #9B8BF5;
+  --gradient: linear-gradient(140deg, var(--brand-2), var(--brand-1));
+  --surface: linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014));
+  --wash:    #08070C;
+  --wash-2:  #0B0A12;
+  --amber:   #E9B78E;
+  --font-head: 'Inter', -apple-system, sans-serif;
+  --font-body: 'Karla', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 40px; background: #050508;
+  display: flex; flex-direction: column; align-items: center; gap: 40px;
+  font-family: var(--font-body);
+}
+
+.slide {
+  width: 1280px; height: 720px; flex: 0 0 720px;
+  padding: 68px 76px; position: relative; overflow: hidden;
+  background: var(--wash); color: var(--ink-2);
+  display: flex; flex-direction: column;
+  box-shadow: 0 30px 80px -40px rgba(0,0,0,0.9);
+}
+.slide.alt { background: var(--wash-2); }
+
+/* ambient light + grain, same recipe as the site */
+.slide::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(52% 60% at 8% 108%, rgba(108,92,231,0.42), transparent 68%),
+    radial-gradient(40% 46% at 42% 116%, rgba(233,183,142,0.20), transparent 66%),
+    radial-gradient(36% 44% at 104% 2%, rgba(108,92,231,0.16), transparent 70%);
+}
+.slide::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.3; mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.slide > * { position: relative; z-index: 2; }
+
+/* ---------- type ---------- */
+h1, h2, h3, h4 { font-family: var(--font-head); color: var(--ink); margin: 0; }
+h1 { font-weight: 500; font-size: 74px; line-height: 1.04; letter-spacing: -0.042em; }
+h2 { font-weight: 500; font-size: 46px; line-height: 1.1; letter-spacing: -0.036em; max-width: 20ch; }
+h3 { font-weight: 500; font-size: 22px; letter-spacing: -0.02em; }
+h4 { font-weight: 500; font-size: 17px; letter-spacing: -0.014em; }
+p  { font-family: var(--font-body); font-weight: 300; font-size: 19px; line-height: 1.66; color: var(--ink-2); margin: 0; }
+p.lead  { font-size: 21px; max-width: 62ch; margin-top: 18px; }
+p.small { font-size: 16px; }
+
+.muted { color: var(--ink-3); }
+.tint {
+  display: inline-block;
+  background: linear-gradient(104deg, var(--brand-2) 8%, var(--brand-1) 92%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+  margin-bottom: 20px; display: block;
+}
+
+/* ---------- furniture ---------- */
+.brand-foot {
+  position: absolute; left: 76px; bottom: 46px; z-index: 3;
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-head); font-weight: 600; font-size: 14px;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.mark {
+  width: 24px; height: 24px; border-radius: 7px; padding: 4px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--brand-2); display: grid; place-items: center;
+}
+.mark svg { width: 100%; height: 100%; display: block; }
+.slide-num {
+  position: absolute; right: 76px; bottom: 46px; z-index: 3;
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-3);
+}
+
+.body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+/* ---------- title ---------- */
+.title { align-items: center; justify-content: center; text-align: center; }
+.title .mark-lg {
+  width: 74px; height: 74px; border-radius: 22px; padding: 12px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+  color: var(--brand-2); margin-bottom: 34px;
+  box-shadow: 0 20px 48px -18px rgba(108,92,231,0.55), inset 0 1px 0 rgba(255,255,255,0.16);
+}
+.chips { display: flex; gap: 10px; margin-top: 34px; flex-wrap: wrap; justify-content: center; }
+.chip {
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-2);
+  padding: 8px 16px; border-radius: 999px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+}
+.chip.lit {
+  color: #fff; border-color: rgba(255,255,255,0.18);
+  background: linear-gradient(145deg, var(--brand-1), #5A49DC);
+}
+
+/* ---------- stat row ---------- */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+.stat {
+  padding: 26px; border-radius: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.stat-value {
+  font-family: var(--font-head); font-weight: 500; font-size: 46px;
+  letter-spacing: -0.036em; color: var(--ink); line-height: 1; margin-bottom: 12px;
+}
+.stat-value.accent { color: var(--brand-2); }
+.stat-label { font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+
+/* ---------- cards ---------- */
+.card-grid { display: grid; gap: 18px; margin-top: 38px; }
+.card-grid.two   { grid-template-columns: repeat(2, 1fr); }
+.card-grid.three { grid-template-columns: repeat(3, 1fr); }
+.card {
+  padding: 28px; border-radius: 18px;
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.card.dark {
+  background: linear-gradient(150deg, rgba(108,92,231,0.16), rgba(108,92,231,0.04));
+  border-color: rgba(108,92,231,0.36);
+  box-shadow: 0 24px 60px -30px rgba(108,92,231,0.5), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.icon-tile {
+  width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
+  background: var(--gradient); color: #fff; margin-bottom: 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.icon-tile.ghost {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11);
+  color: var(--ink-2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.card-tag {
+  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-3); display: block; margin-bottom: 8px;
+}
+.card h4 { margin-bottom: 9px; }
+.card p { font-size: 15.5px; line-height: 1.62; }
+
+/* ---------- pipeline ---------- */
+.pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 44px; }
+.pipe-step { position: relative; }
+.pipe-step:not(:last-child)::after {
+  content: ""; position: absolute; right: -20px; top: 17px;
+  width: 7px; height: 7px; border-top: 1.5px solid var(--ink-3);
+  border-right: 1.5px solid var(--ink-3); transform: rotate(45deg);
+}
+.pipe-num {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11);
+  margin-bottom: 18px;
+}
+.pipe-num.lit {
+  background: var(--gradient); color: #fff; border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 12px 28px -12px rgba(108,92,231,0.8), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.pipe-step h4 { margin-bottom: 8px; }
+.pipe-step p { font-size: 15px; line-height: 1.6; }
+.pipe-chain {
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+  display: block; margin-top: 12px;
+}
+
+/* ---------- architecture ---------- */
+.arch { display: grid; grid-template-columns: 340px 1fr; gap: 56px; margin-top: 34px; align-items: start; }
+.arch-node {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; border-radius: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.arch-node h4 { font-size: 15.5px; margin: 0; }
+.arch-node .sub { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.arch-node.accent {
+  background: linear-gradient(150deg, rgba(108,92,231,0.18), rgba(108,92,231,0.05));
+  border-color: rgba(108,92,231,0.4);
+}
+.arch-connector { width: 1px; height: 16px; background: var(--border); margin: 0 auto; }
+.spec-list { display: grid; gap: 22px; }
+.spec { display: grid; grid-template-columns: 9px 1fr; gap: 15px; align-items: start; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-2); margin-top: 9px; }
+.spec h4 { margin-bottom: 5px; }
+.spec p { font-size: 15px; line-height: 1.6; }
+code {
+  font-family: var(--font-mono); font-size: 13px; color: var(--brand-2);
+  background: rgba(108,92,231,0.12); padding: 2px 7px; border-radius: 5px;
+}
+
+/* ---------- address table ---------- */
+.addr-table { margin-top: 36px; border-top: 1px solid var(--border); }
+.addr-row {
+  display: grid; grid-template-columns: 230px 130px 1fr; gap: 20px;
+  align-items: center; padding: 20px 4px; border-bottom: 1px solid var(--border);
+}
+.addr-row h4 { margin: 0; }
+.addr-net {
+  font-family: var(--font-mono); font-size: 11px; padding: 5px 12px;
+  border-radius: 999px; text-align: center;
+  background: rgba(108,92,231,0.14); color: var(--brand-2);
+  border: 1px solid rgba(108,92,231,0.3);
+}
+.addr-val { font-family: var(--font-mono); font-size: 14px; color: var(--ink-2); }
+
+/* ---------- honest ---------- */
+.honest {
+  padding: 24px 26px; border-radius: 15px;
+  background: rgba(233,183,142,0.08); border: 1px solid rgba(233,183,142,0.26);
+}
+.honest h4 { color: var(--amber); margin-bottom: 8px; }
+.honest p { font-size: 15.5px; line-height: 1.62; }
+
+/* ---------- roadmap ---------- */
+.road { margin-top: 36px; border-top: 1px solid var(--border); }
+.road-item {
+  display: grid; grid-template-columns: 150px 1fr; gap: 28px;
+  padding: 22px 4px; border-bottom: 1px solid var(--border); align-items: start;
+}
+.road-when {
+  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-3); padding-top: 3px;
+}
+.road-item h4 { margin-bottom: 5px; }
+.road-item p { font-size: 15px; }
+
+/* ---------- print ---------- */
+@page { size: 1280px 720px; margin: 0; }
+@media print {
+  body { background: #fff; gap: 0; padding: 0; display: block; }
+  .slide { page-break-after: always; break-after: page; box-shadow: none; }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ 01 · TITLE ══════════════ -->
+<section class="slide title">
+  <div class="body" style="align-items:center;justify-content:center;text-align:center">
+    <span class="mark-lg">
+      <svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg>
+    </span>
+    <h1>Handles the small stuff.<br><span class="tint">Asks first.</span></h1>
+    <p class="lead">A front desk for small nonprofits that cannot staff one —
+      answering the community, watching the donor list, and stopping for a human
+      before anything goes out in the organisation's name.</p>
+    <div class="chips">
+      <span class="chip lit">Good Neighbor Agents</span>
+      <span class="chip">usefoyer.online</span>
+      <span class="chip">github.com/Kingnanaweb3/foyer</span>
+      <span class="chip">Strands Agents SDK</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 02 · PROBLEM ══════════════ -->
+<section class="slide alt">
+  <div class="body">
+    <span class="eyebrow">The problem</span>
+    <h2>Two jobs nobody has time for. <span class="muted">Both relationship work. Both dropped.</span></h2>
+    <p class="lead">A volunteer is setting up chairs for the food drive when the
+      fortieth "where do I park" arrives. Meanwhile a donor who gave every month
+      for two years quietly stopped in March, and nobody has looked at the list
+      since.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-value">2</div>
+        <div class="stat-label">Distinct jobs — inbound questions, and donor
+          relationships — competing for the same volunteer hour</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value accent">194</div>
+        <div class="stat-label">Days one sample donor has been silent, against
+          a 45-day giving pattern. Nobody flagged it</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">0</div>
+        <div class="stat-label">People whose actual job is either of these, at
+          an organisation this size</div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">02</div>
+</section>
+
+<!-- ══════════════ 03 · WHO IT'S FOR ══════════════ -->
+<section class="slide">
+  <div class="body">
+    <span class="eyebrow">Who it's for</span>
+    <h2>Organisations where the coordinator role <span class="muted">exists on paper.</span></h2>
+    <div class="card-grid three">
+      <div class="card">
+        <span class="icon-tile ghost"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+        <span class="card-tag">Food banks</span>
+        <h4>Two paid staff, sixty volunteers</h4>
+        <p>Distribution days generate a wall of logistics questions, and donor
+          thank-yous slip because the same person runs both.</p>
+      </div>
+      <div class="card">
+        <span class="icon-tile ghost"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        <span class="card-tag">Libraries &amp; schools</span>
+        <h4>Programmes with no front desk</h4>
+        <p>Literacy classes, after-school clubs, community rooms. Sign-ups and
+          capacity handled by hand, in a shared inbox.</p>
+      </div>
+      <div class="card">
+        <span class="icon-tile ghost"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+        <span class="card-tag">Mutual aid</span>
+        <h4>A spreadsheet and a group chat</h4>
+        <p>Rotating organisers, no institutional memory, and a donor list that
+          only gets opened when funding runs short.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">03</div>
+</section>
+
+<!-- ══════════════ 04 · WHY IT MATTERS ══════════════ -->
+<section class="slide alt">
+  <div class="body">
+    <span class="eyebrow">Why it matters</span>
+    <h2>The blocker isn't capability. <span class="tint">It's accountability.</span></h2>
+    <p class="lead">Building an agent that answers questions is easy. Building one
+      a nonprofit board will actually switch on is the harder problem — and AWS's
+      own Public Sector guidance names why.</p>
+    <div class="card-grid three">
+      <div class="card">
+        <span class="card-tag">AWS names it</span>
+        <h4>Turnover</h4>
+        <p>Volunteers and staff rotate. The person who set the agent up may not
+          be there in a year.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">AWS names it</span>
+        <h4>Board accountability</h4>
+        <p>Someone has to answer for what the agent did, to people who have
+          never touched it.</p>
+      </div>
+      <div class="card dark">
+        <span class="card-tag">AWS names it</span>
+        <h4>Unexplainable decisions</h4>
+        <p>Agents whose reasoning can't be shown are the thing that stops
+          adoption. This is the one Foyer is built around.</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:26px;color:var(--ink-3)">Source: "A governance
+      framework for nonprofit agentic AI on AWS", AWS Public Sector Blog.</p>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">04</div>
+</section>
+
+<!-- ══════════════ 05 · SOLUTION ══════════════ -->
+<section class="slide">
+  <div class="body">
+    <span class="eyebrow">What we built</span>
+    <h2>One agent. Two jobs. <span class="muted">One of them it can't finish alone.</span></h2>
+    <div class="card-grid two">
+      <div class="card">
+        <span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+        <span class="card-tag">Front desk · acts alone</span>
+        <h4>Answers, and actually does things</h4>
+        <p>Event times, parking, remaining spots. Writes RSVPs straight to the
+          roster and refuses when an event is full. These are small and
+          reversible, so nobody's approval is needed.</p>
+      </div>
+      <div class="card dark">
+        <span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <span class="card-tag">Donor steward · always stops</span>
+        <h4>Drafts, explains, waits</h4>
+        <p>Measures each donor against their own giving rhythm, writes the
+          re-engagement message — then queues it with its reasoning. It has no
+          way to send.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">05</div>
+</section>
+
+<!-- ══════════════ 06 · HOW IT WORKS ══════════════ -->
+<section class="slide alt">
+  <div class="body">
+    <span class="eyebrow">How it works</span>
+    <h2>One message in. <span class="muted">Four decisions out.</span></h2>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-num">01</div>
+        <h4>Route</h4>
+        <p>An orchestrator reads the message and picks a specialist. It never
+          answers anything itself.</p>
+        <span class="pipe-chain">agents-as-tools</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">02</div>
+        <h4>Act, or draft</h4>
+        <p>Front Desk acts. Donor Steward can only produce a draft and a
+          reason.</p>
+        <span class="pipe-chain">8 tools, 2 registries</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num lit">03</div>
+        <h4>Stop for a human</h4>
+        <p>Anything donor-facing queues with its reasoning attached and waits
+          for a person.</p>
+        <span class="pipe-chain">approval gate</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <h4>Send, and record</h4>
+        <p>On approval the message goes out — and the human's decision joins the
+          agent's own trail.</p>
+        <span class="pipe-chain">one decision log</span>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">06</div>
+</section>
+
+<!-- ══════════════ 07 · THE DIFFERENTIATOR ══════════════ -->
+<section class="slide">
+  <div class="body">
+    <span class="eyebrow">The differentiator</span>
+    <h2>The boundary is structural, <span class="tint">not instructed.</span></h2>
+    <p class="lead">Most guardrails are a sentence in a prompt asking the model to
+      behave. Foyer's is a gap in the tool registry — there is nothing to reach for.</p>
+    <div class="card-grid two" style="margin-top:32px">
+      <div class="card dark">
+        <span class="card-tag">In the code</span>
+        <h4>No send tool exists</h4>
+        <p>The Donor Steward's registry holds <code>draft_followup_message</code>
+          and <code>queue_approval</code>. There is no send. No prompt can talk
+          it past a gate it cannot see.</p>
+      </div>
+      <div class="card dark">
+        <span class="card-tag">In the code</span>
+        <h4>Approve isn't a tool either</h4>
+        <p><code>decide()</code> is a plain function in <code>governance/queue.py</code>,
+          deliberately not decorated. Only the web layer calls it — the agent
+          cannot approve its own draft.</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:26px;color:var(--ink-3)">Both claims are
+      verifiable in the repository in under a minute.</p>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">07</div>
+</section>
+
+<!-- ══════════════ 08 · ARCHITECTURE ══════════════ -->
+<section class="slide alt">
+  <div class="body">
+    <span class="eyebrow">Architecture</span>
+    <h2>Built on Strands Agents. <span class="muted">Genuinely multi-agent.</span></h2>
+    <div class="arch">
+      <div>
+        <div class="arch-node">
+          <div><h4>Community member / donor</h4><span class="sub">web chat</span></div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-node">
+          <div><h4>Foyer orchestrator</h4><span class="sub">routes, never answers</span></div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-node">
+          <div><h4>Front Desk · Donor Steward</h4><span class="sub">separate tool registries</span></div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-node accent">
+          <div><h4>Approval gate</h4><span class="sub">human decides · then it sends</span></div>
+        </div>
+      </div>
+      <div class="spec-list">
+        <div class="spec"><span class="dot"></span><div>
+          <h4>Agents as tools</h4>
+          <p>Sub-agents are exposed to the orchestrator as callable tools, so
+            routing is a logged decision rather than a keyword match.</p>
+        </div></div>
+        <div class="spec"><span class="dot"></span><div>
+          <h4>Per-donor cadence</h4>
+          <p><code>check_lapsing_donors</code> compares each donor to their own
+            giving rhythm — a first-time giver is never flagged, because there is
+            no pattern to break.</p>
+        </div></div>
+        <div class="spec"><span class="dot"></span><div>
+          <h4>Shared governance layer</h4>
+          <p>Both sub-agents write to <code>log_decision</code>. Human approvals
+            land in the same trail, so the record is one story.</p>
+        </div></div>
+        <div class="spec"><span class="dot"></span><div>
+          <h4>Model-agnostic by design</h4>
+          <p>Strands separates the agent from the provider. Swapping models is a
+            single file — the tools, boundaries and logs are untouched.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">08</div>
+</section>
+
+<!-- ══════════════ 09 · LIVE ══════════════ -->
+<section class="slide">
+  <div class="body">
+    <span class="eyebrow">Not a mockup</span>
+    <h2>It's running right now. <span class="muted">Try it before you score it.</span></h2>
+    <div class="addr-table">
+      <div class="addr-row">
+        <h4>Front desk</h4><span class="addr-net">LIVE</span>
+        <span class="addr-val">usefoyer.online</span>
+      </div>
+      <div class="addr-row">
+        <h4>Approval panel</h4><span class="addr-net">LIVE</span>
+        <span class="addr-val">usefoyer.online/admin</span>
+      </div>
+      <div class="addr-row">
+        <h4>Agent API</h4><span class="addr-net">RAILWAY</span>
+        <span class="addr-val">foyer-backend-production.up.railway.app</span>
+      </div>
+      <div class="addr-row">
+        <h4>Source</h4><span class="addr-net">MIT</span>
+        <span class="addr-val">github.com/Kingnanaweb3/foyer</span>
+      </div>
+      <div class="addr-row">
+        <h4>Approved messages</h4><span class="addr-net">SENDING</span>
+        <span class="addr-val">real email, on human approval</span>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">09</div>
+</section>
+
+<!-- ══════════════ 10 · HONESTY ══════════════ -->
+<section class="slide alt">
+  <div class="body">
+    <span class="eyebrow">What it isn't, yet</span>
+    <h2>The limits, named. <span class="muted">Before you find them.</span></h2>
+    <div class="card-grid two" style="margin-top:32px">
+      <div class="honest">
+        <h4>Sample data, not a real organisation</h4>
+        <p>Riverside Community Trust is fictional. The donors and events are
+          sample records. The behaviour is real; the nonprofit isn't — no pilot
+          has run yet.</p>
+      </div>
+      <div class="honest">
+        <h4>Not deployed on AgentCore</h4>
+        <p>The repo is AgentCore-ready — entry point and config are committed —
+          but deployment fails on an account-level quota. A support case is open.
+          Inference runs on a non-Bedrock provider for the same reason.</p>
+      </div>
+      <div class="honest">
+        <h4>JSON store, not a database</h4>
+        <p>Fine for a demo, wrong for real donor records. Durable storage is the
+          first thing a pilot would need.</p>
+      </div>
+      <div class="honest">
+        <h4>Email only, single organisation</h4>
+        <p>SMS and WhatsApp are the intended delivery channels and aren't built.
+          There's no multi-tenancy — one org per deployment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">10</div>
+</section>
+
+<!-- ══════════════ 11 · ROADMAP ══════════════ -->
+<section class="slide">
+  <div class="body">
+    <span class="eyebrow">Where it goes</span>
+    <h2>Shipped, next, <span class="tint">and the thesis.</span></h2>
+    <div class="road">
+      <div class="road-item">
+        <span class="road-when">Shipped</span>
+        <div><h4>The full loop, live</h4>
+          <p>Multi-agent routing, RSVP writes, per-donor lapse detection, the
+            approval gate, a readable decision log, and real delivery on
+            approval.</p></div>
+      </div>
+      <div class="road-item">
+        <span class="road-when">Next</span>
+        <div><h4>Meet people where they are</h4>
+          <p>SMS and WhatsApp delivery — matching the low-tech channels AWS's own
+            funded nonprofit projects reach underserved communities through.</p></div>
+      </div>
+      <div class="road-item">
+        <span class="road-when">Next</span>
+        <div><h4>Real records, real org</h4>
+          <p>Durable storage, a CRM connector, and a pilot with one food bank to
+            replace sample data with the real thing.</p></div>
+      </div>
+      <div class="road-item">
+        <span class="road-when">Thesis</span>
+        <div><h4>Restraint is the feature</h4>
+          <p>The brief asked for agents that run quietly and only surface for a
+            real decision. That isn't a limitation to engineer away — it's the
+            thing that makes an agent adoptable by people who have to answer for
+            it.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-foot"><span class="mark"><svg viewBox="0 0 64 64" fill="none"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M32 6a26 26 0 1 1 0 52 26 26 0 0 1 0-52Z M32 15C32 24 41 31.1 58 31.1 41 31.1 32 40 32 49 32 40 23 32.9 6 32.9 23 32.9 32 24 32 15Z M6 31.1h52v1.8H6Z"/></svg></span>FOYER</div>
+  <div class="slide-num">11</div>
+</section>
+
+</body>
+</html>
